@@ -1,0 +1,349 @@
+//PARKING SPACE OPTIMIZATION C++ SOURCE CODE BY SUNNY KUMAR MAURYA
+
+
+
+
+#include <iostream.h>
+#include <conio.h>
+#include <graphics.h>
+#include <dos.h>
+#include<math.h>
+#include <fstream.h>
+void page1()
+{
+// initialize graphics and local variables
+int gdriver=DETECT,gmode;
+initgraph(&gdriver,&gmode," ");
+for(int i=0;i<15;i++)
+{
+setcolor(i);
+settextstyle(0,0,4);
+outtextxy(100,100,"PARKING LOT");
+outtextxy(200,170,"DESIGN");
+settextstyle(0,0,2);
+outtextxy(250,430,"VIDEO COMPRESSION GROUP ");
+delay(200);
+}
+getch();
+}
+int calv(int l1,int b1,int E1)
+{
+l1=5*l1;
+b1=b1*5;
+int n1=(l1+100-175)/10;
+int v=115;
+int Espace=0;
+int k=E1;
+v=v+15;
+Espace++;
+while(n1<k)
+{
+for(int i=0;i<3;i++)
+{
+if(n1<k)
+{ v=v+15;
+k=k-n1;
+}
+}
+if(n1<k)
+{ v=v+15;
+Espace++;
+}
+}
+v=v+15;
+return v;
+}
+int calEspace(int l1,int b1,int E1)
+{ l1=5*l1;
+b1=b1*5;
+int n1=(l1+100-175)/10;
+int v=115;
+int Espace=0;
+int k=E1;
+v=v+15;
+Espace++;
+while(n1<k)
+{
+for(int i=0;i<3;i++)
+{
+if(n1<k)
+{ v=v+15;
+k=k-n1;
+}
+}
+if(n1<k)
+{ v=v+15;
+Espace++;
+}
+}
+v=v+15;
+return Espace;
+}
+int calr(int l1,int b1,int N1,int v1)
+{
+l1=5*l1;
+b1=5*b1;
+int n2=(100+b1-v1)/10;
+int n3=(100+b1-v1)/15;
+int r=100+l1-15;
+r=r-3;
+int h=N1;
+if(n2<h)
+{
+r=r-10;
+h=h-n3;
+r=r-3;
+}
+int i;
+while(n2<h)
+{ int m=0;
+for(i=0;i<2;i++)
+{ if(n2<h)
+{ r=r-15;
+h=h-n2;
+m++;
+}
+}
+if(m==2)
+{
+r=r-3;
+}
+if(n2<h)
+{
+r=r-10;
+h=h-n3;
+r=r-3;
+}
+}
+r=r-15;
+return r;
+}
+int calRspace(int r)
+{ int r2=r-15;
+int C2;int Rspace=0;
+while(r2>115)
+{
+r2=r2-15;
+if(r2>130);
+{ Rspace++;
+}
+r2=r2-30;
+}
+return Rspace;
+}
+void main()
+{
+page1();
+start:clrscr();
+int l,b,R,N,E;
+// initialize graphics and local variables
+int gdriver=DETECT,gmode;
+initgraph(&gdriver,&gmode," ");
+cout<<char(273)<<" Enter Length ";
+cin>>l;
+cout<<endl<<char(273)<<" Enter Breadth ";
+cin>>b;
+if(l>107 || b>75 || l<20|| b<12)
+{
+cout<<"\nNOT POSSIBLE, PLEASE ENTER AGAIN!";
+delay(1000);
+goto start;
+}
+cout<<endl;
+cout<<char(273)<<" Enter Random users ";
+cin>>R;
+cout<<endl;
+cout<<char(273)<<" Enter Evening users ";
+cin>>E;
+cout<<endl;
+cout<<char(273)<<" Enter Night users ";
+cin>>N;
+int vcal=calv(l,b,E);
+int rcal=calr(l,b,N,vcal);
+if(vcal>=100+(5*(b)) || rcal>=100+(5*(l)))
+{ cout<<"\nNOT POSSIBLE, PLEASE ENTER AGAIN!";
+delay(1000);
+goto start;
+}
+int Espace=calEspace(l,b,E);
+int Rspace=calRspace(rcal);
+vcal=(vcal-100)/5;
+rcal=(rcal-100)/5;
+unsigned int unarea=(3*l)+((b-vcal)*3)+((vcal-9)*15)+(5*6)+(Rspace*(3*(b-vcal)))+(Espace*(3*(l-15)));
+unsigned int Tarea=(l*b);
+int maxcap=(Tarea-unarea)/6;
+cout<<endl<<char(273)<<" MAXCAP "<<maxcap;
+if(E+R+N>maxcap)
+{
+cout<<" CANNOT ACCOMODATE THESE MANY VEHICLES!! ";
+getch();
+goto start;
+}
+getch();
+clrscr();
+// initialize graphics and local variables
+gdriver=DETECT,gmode;
+initgraph(&gdriver,&gmode," ");
+l=5*l;
+b=5*b;
+rectangle(100,100,100+(l),100+(b));
+getch();
+rectangle(100,100,150,125);
+line(125,100,125,125);
+outtextxy(105,105,"EN");
+outtextxy(130,105,"EX");
+getch();
+int n1=(l+100-175)/10;
+int v=115;
+setcolor(BLUE);
+line(100+l,v,175,v);
+int E1space=0;
+int k=E;
+v=v+15;
+setcolor(GREEN);
+line(100+l,v,175,v);
+while(n1<k)
+{
+for(int i=0;i<3;i++)
+{
+if(n1<k)
+{ v=v+15;
+k=k-n1;
+}
+}
+setcolor(BLUE);
+line(100+l,v,175,v);
+if(n1<k)
+{
+v=v+15;
+setcolor(GREEN);
+{
+line(100+l,v,175,v);
+E1space++;
+}
+}
+}
+setcolor(BLUE);
+rectangle(175,100,100+l,v);
+outtextxy(200,105, "TILL EVENING USERS");
+getch();
+setcolor(MAGENTA);
+v=v+15;
+int n2=(100+b-v)/10;
+int n3=(100+b-v)/15;
+int r=100+l-15;
+line(r,100+b,r,v);
+r=r-3;
+line(r,100+b,r,v);
+int h=N;
+if(n2<h)
+{
+r=r-10;
+h=h-n3;
+line(r,100+b,r,v);
+r=r-3;
+line(r,100+b,r,v);
+}
+int i;
+while(n2<h)
+{
+int m=0;
+for(i=0;i<2;i++)
+{ if(n2<h)
+{ r=r-15;
+h=h-n2;
+line(r,100+b,r,v);
+m++;
+}
+}
+if(m==2)
+{ r=r-3;
+line(r,100+b,r,v);
+}
+if(n2<h)
+{
+r=r-10;
+h=h-n3;
+line(r,100+b,r,v);
+r=r-3;
+line(r,100+b,r,v);
+}
+}
+rectangle(r,v,100+l,100+b);
+r=r-15;
+outtextxy((600+r)/2,101+b,"^");
+outtextxy((600+r)/2,102+b,"|");
+outtextxy((600+r)/2,104+b,"|");
+outtextxy(((600+r)/2)-75,110+b,"TILL NIGHT USERS");
+getch();
+setcolor(YELLOW);
+rectangle(100,v,r,100+b);
+int r2=r-15;
+line(r2,100+b,r2,v);
+int C2;
+int R1space=0;
+while(r2>115)
+{
+r2=r2-15;
+if(r2>115);
+{
+setcolor(RED);
+line(r2,100+b,r2,v);
+R1space++;
+}
+r2=r2-30;
+if(r2>115)
+{ setcolor(YELLOW);
+line(r2,100+b,r2,v);
+}
+}
+outtextxy(102,v+10,"RANDOM USERS");
+getch();
+// initialize graphics and local variables
+gdriver=DETECT,gmode;
+initgraph(&gdriver,&gmode," ");
+setbkcolor(BLACK);
+setcolor(WHITE);
+outtextxy(300,40,"GENERAL PARKING DESIGN");
+rectangle(100,100,100+l,100+b);
+int r1=100+l-15;
+line(r1,100+b,r1,100);
+int C;
+int Gspace=0;
+while(r1>100)
+{
+r1=r1-15;
+if(r1>100);
+{ setcolor(BROWN);
+line(r1,100+b,r1,100);
+Gspace++;
+}
+r1=r1-30;
+if(r1>100)
+{ setcolor(WHITE);
+line(r1,100+b,r1,100);
+}
+}
+getch();
+// initialize graphics and local variables
+gdriver=DETECT,gmode;
+initgraph(&gdriver,&gmode," ");
+unsigned int unareaG=(Gspace*(3*b/5));
+l=l/5; b=b/5;v=(v-100)/5; r=(r-100)/5;
+Tarea=(l*b);
+unarea=(3*l)+((b-v)*3)+((v-9)*15)+(5*6)+(Rspace*(3*(b-v)))+(Espace*(3*(l-15)));
+cout<<char(273)<<" TOTAL AREA "<<Tarea<<endl;
+cout<<endl<<char(273)<<" AREA UNUSED IN GENERAL CASE "<<unareaG+500<<endl;
+cout<<endl<<char(273)<<" UNUSED AREA IN NEW DESIGN "<<unarea<<endl;
+int carG=(Tarea-unareaG-500)/6;
+cout<<endl<<char(273)<<" NO. OF CARS PARKED IN GIVEN AREA WITH GENERAL DESIGN "<<(Tarea-unareaG-500)/6<<endl;
+cout<<endl<<char(273)<<" NO. OF CARS PARKED IN GIVEN AREA WITH NEW DESIGN "<<(Tarea-unarea)/6<<endl;
+unsigned int save=unareaG+500-unarea;
+int PP=(Tarea-unareaG-500)/6;
+int KK=(Tarea-unarea)/6;
+cout<<endl<<char(273)<<" AREA SAVED "<<save<<endl;
+unsigned int excar=save/6;
+cout<<endl<<char(273)<<" NO. OF EXTRA CARS WHICH CAN BE PARKED "<<KK-PP<<endl;
+cout<<endl<<char(273)<<" PERCENTAGE INCREASE IN NO. OF CARS PARKED "<<float((((KK-PP)*100)/carG))<<endl;
+getch();
+}
